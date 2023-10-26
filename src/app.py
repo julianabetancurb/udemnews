@@ -1,7 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from routes.posts import post
-from routes.users import user
 from routes.auth import auth
 from utils.db import db
 
@@ -14,11 +13,10 @@ app.config['SECRET_KEY'] = 'ClaveUltraSecreta'
 db.init_app(app)
 
 
-app.register_blueprint(post)
-
-app.register_blueprint(user)
-
 app.register_blueprint(auth)
 
+app.register_blueprint(post)
+
+app.add_url_rule('/', endpoint='index')
 
 
