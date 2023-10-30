@@ -1,9 +1,8 @@
 from utils.db import db
-#from sqlalchemy.sql import func
 
 class Post(db.Model):
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    title = db.Column(db.String(50), unique=True, nullable=False)
+    id = db.Column(db.Integer, primary_key=True,  unique=True, autoincrement=True)
+    title = db.Column(db.String(50), nullable=False)
     description = db.Column(db.String(500))
     img = db.Column(db.String(300))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))

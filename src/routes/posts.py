@@ -60,7 +60,7 @@ def update(id):
         img = request.form['img']
         error = None
 
-        if not title or description:
+        if not title or not description:
             error = 'Faltan campos por completar'
         
         if error:
@@ -83,6 +83,6 @@ def delete(id):
 
     if post:
         db.session.delete(post)
-        db.commit()
-        return redirect(url_for('blog.index'))
+        db.session.commit()
+        return redirect(url_for('post.index'))
 

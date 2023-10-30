@@ -14,6 +14,10 @@
       <label for="description" class="form-label">Descripción</label>
       <textarea class="form-control" id="description" name="description">{{ request.form['description'] or post['description'] }}</textarea>
     </div>
+    <div class="mb-3">
+      <label for="img" class="form-label">Imagen</label>
+      <input type="text" class="form-control" id="img" name="img" value="{{ request.form['img'] or post['img'] }}" required>
+    </div>
     <button type="submit" class="btn btn-primary">Guardar</button>
   </form>
   <hr>

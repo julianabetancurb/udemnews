@@ -1,4 +1,5 @@
 import functools
+import re
 
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for
@@ -18,6 +19,8 @@ def register():
         email = request.form['email']
         password = request.form['password']
         user_exist = User.query.filter_by(email=email).first()
+        valid_email = is_valid_email(email)
+        valid_password = is_valid_password(password)
         error = None
 
         if not username:
@@ -25,7 +28,13 @@ def register():
         elif not password:
             error = 'Se requiere una contraseña.'
         elif user_exist:
-            error = 'Ya existe una cuenta vinculada con este correo'
+            error = 'Ya existe una cuenta vinculada con este correo.'
+        elif valid_email is False:
+            error = 'El email no es valido.'
+        elif valid_password is False:
+            error = 'La contraseña no es valida.'
+        elif bool(re.match(r'^\d*$', username)):
+            error = 'Este nombre no es valido.'
 
         if error is None:
             try:
@@ -89,3 +98,23 @@ def login_required(view):
         return view(**kwargs)
     
     return wrapped_view
+
+def is_valid_email(email):
+    email_regex = r'^[\w\.-]+@[\w\.-]+\.\w+$'
+
+    if re.match(email_regex, email):
+        return True
+    else:
+        return False
+    
+def is_valid_password(password):
+    min_length = 8 
+    has_digit = any(char.isdigit() for char in password)
+    has_upper = any(char.isupper() for char in password)
+    has_special = any(char in "!@#$%^&*()_+-=[]{}|;:'<>,.?/" for char in password)
+
+    if len(password) >= min_length and has_digit and has_upper and has_special:
+        return True
+    else:
+        return False
+
