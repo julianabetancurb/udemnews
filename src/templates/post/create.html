@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% set faculties = ['Ingenieria de sistemas', 'Ingenieria ambiental', 'Ingenieria financiera'] %}
+
 {% block header %}
   <h1>{% block title %}Nueva publicación{% endblock %}</h1>
 {% endblock %}
@@ -17,6 +19,25 @@
     <div class="mb-3">
       <label for="img" class="form-label">Agrega una imagen</label>
       <input type="text" class="form-control" id="img" name="img" value="{{ request.form['img'] }}" required>
+    </div>
+    <div class="mb-3">
+      <label for="date" class="form-label">Agrega una fecha de inicio de la convocatoria</label>
+      <input type="date" class="form-control" id="date" name="date" value="{{ request.form['date'] }}" required>
+    </div>
+    <div class="mb-3">
+      <label for="deadline" class="form-label">Agrega una fecha de culminación de la convocatoria</label>
+      <input type="date" class="form-control" id="deadline" name="deadline" value="{{ request.form['deadline'] }}" required>
+    </div>
+    <div class="form-group">
+      <label>Programa</label>
+      {% for faculty in faculties %}
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" name="selected_question" id="{{ loop.index }}" value="{{ faculty }}">
+          <label class="form-check-label" for="{{ loop.index }}">
+            {{ faculty }}
+          </label>
+        </div>
+      {% endfor %}
     </div>
     <button type="submit" class="btn btn-primary">Guardar</button>
     <a class="btn btn-primary" href="/">Regresar</a>

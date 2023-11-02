@@ -6,12 +6,12 @@ from routes.auth import login_required
 from utils.db import db
 from models.new import New
 
-new = Blueprint('new', __name__)
+new = Blueprint('new', __name__, url_prefix='/new')
 
-@new.route('/')
-def index():
+@new.route('/news', methods=['GET'])
+def index_new():
     news = db.session.query(New).all()
-    return render_template('new/index.html', news=news)
+    return render_template('new/index_new.html', news=news)
 
 @new.route('/create', methods=['GET', 'POST'])
 def create():
@@ -34,20 +34,20 @@ def create():
             db.session.add(new)
             db.session.commit()
         
-            return redirect(url_for('post.index'))
+            return redirect(url_for('new.index'))
         
-    return render_template('post/create.html')
+    return render_template('new/create.html')
 
 def get_new(id, check_author=True):
-    post = New.query.filter_by(id=id).first()
+    new = New.query.filter_by(id=id).first()
 
-    if post is None:
+    if new is None:
         abort(404, f"Post id {id} doesn't exist.")
 
-    if check_author and post.user_id != g.user.id:
+    if check_author and new.user_id != g.user.id:
         abort(403)
 
-    return post
+    return new
 
 @new.route('/<int:id>/update', methods=['GET', 'POST'])
 @login_required
@@ -77,6 +77,7 @@ def update(id):
 
 
 @new.route('/<int:id>/details', methods=['GET'])
+@login_required
 def details(id):
     new = get_new(id)
     if new is None:

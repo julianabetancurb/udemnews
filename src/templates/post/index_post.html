@@ -17,7 +17,8 @@
             <div class="card-body">
               <h5 class="card-title">{{ post.title }}</h5>
               <p class="card-text">{{ post.description }}</p>
-              <p class="card-text"><small class="text-muted">por {{ post.user.username }}</small></p>
+              <p class="card-text"><small class="text-muted">Hecho por: {{ post.user.username }}</small></p>
+              <p class="card-text"><small class="text-muted">Programa: {{ post.faculty }}</small></p>
               {% if g.user and g.user.id == post.user_id %}
                 <a class="btn btn-primary" href="{{ url_for('post.update', id=post.id) }}">Editar</a>
               {% endif %}

@@ -11,7 +11,7 @@ post = Blueprint('post', __name__)
 @post.route('/')
 def index():
     posts = db.session.query(Post).all()
-    return render_template('post/index.html', posts=posts)
+    return render_template('post/index_post.html', posts=posts)
 
 @post.route('/create', methods=['GET', 'POST'])
 def create():
@@ -19,6 +19,9 @@ def create():
         title = request.form['title']
         description = request.form['description']
         img = request.form['img']
+        date = request.form['date']
+        deadline = request.form['deadline']
+        faculty = request.form.get('selected_question')
         user_id = g.user.id
         error = None
 
@@ -30,7 +33,7 @@ def create():
             flash(error)
 
         else:
-            new_post = Post(title, description, img, user_id)
+            new_post = Post(title, description, img, date, deadline, faculty, user_id)
             db.session.add(new_post)
             db.session.commit()
         
@@ -77,6 +80,7 @@ def update(id):
 
 
 @post.route('/<int:id>/details', methods=['GET'])
+@login_required
 def details(id):
     post = get_post(id)
     if post is None:

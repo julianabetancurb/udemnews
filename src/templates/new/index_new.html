@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Noticias{% endblock %}</h1>
+  {% if g.user %}
+    <a class="btn btn-primary" href="{{ url_for('new.create') }}">Nuevo</a>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      {% for new in news %}
+        <div class="col-md-6">
+          <div class="card mb-4">
+            <div class="card-body">
+              <h5 class="card-title">{{ new.title }}</h5>
+              <p class="card-text">{{ new.description }}</p>
+              <p class="card-text"><small class="text-muted">por {{ new.user.username }}</small></p>
+              {% if g.user and g.user.id == new.user_id %}
+                <a class="btn btn-primary" href="{{ url_for('new.update', id=new.id) }}">Editar</a>
+              {% endif %}
+              <a class="btn btn-secondary" href="{{ url_for('new.details', id=new.id) }}">Detalles</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}

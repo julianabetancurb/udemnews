@@ -18,6 +18,8 @@ def register():
         username = request.form['username']
         email = request.form['email']
         password = request.form['password']
+        recovery_question = request.form.get('selected_question')
+        recovery_answer = request.form['recovery_answer']
         user_exist = User.query.filter_by(email=email).first()
         valid_email = is_valid_email(email)
         valid_password = is_valid_password(password)
@@ -35,10 +37,14 @@ def register():
             error = 'La contraseña no es valida.'
         elif bool(re.match(r'^\d*$', username)):
             error = 'Este nombre no es valido.'
+        elif not recovery_question: 
+            error = 'Selecciona una pregunta'
+        elif not recovery_answer: 
+            error = 'No olvides tu respuesta'
 
         if error is None:
             try:
-                new_user = User(username, email, generate_password_hash(password))
+                new_user = User(username, email, generate_password_hash(password), recovery_question, recovery_answer)
                 db.session.add(new_user)
                 db.session.commit()
             except db.IntegrityError:
@@ -88,6 +94,72 @@ def load_logged_in_user():
 def logout():
     session.clear()
     return redirect(url_for('auth.login'))
+
+@auth.route('/recovery_stage_1', methods=['GET', 'POST'])
+def recovery_stage_1():
+    if request.method == 'POST':
+        email = request.form.get('email')
+        user = User.query.filter_by(email=email).first()
+
+        if not email:
+            flash('Por favor, ingrese su dirección de correo electrónico.')
+        elif not user:
+            flash('No se encontró un usuario con esta dirección de correo electrónico.')
+        else:
+             return redirect(url_for('auth.recovery_stage_2', user_id=user.id))
+
+    return render_template('auth/recovery_password_stage1.html')
+
+@auth.route('/recovery_stage_2/<int:user_id>', methods=['GET', 'POST'])
+def recovery_stage_2(user_id):
+
+    user = User.query.filter_by(id=user_id).first()
+    if request.method == 'POST':
+        recovery_answer = request.form.get('recovery_answer')
+        error = None
+
+        if user is None:
+            error = 'No se encontró un usuario con ese correo electrónico'
+
+        if user and recovery_answer.lower() != user.recovery_answer.lower():
+            error = 'Respuesta incorrecta'
+
+        if error is None:
+            return redirect(url_for('auth.change_password', user_id=user.id))
+
+        flash(error)
+
+    return render_template('auth/recovery_password_stage2.html', user=user)
+
+
+@auth.route('/change_password/<int:user_id>', methods=['GET', 'POST'])
+def change_password(user_id):
+    user = User.query.filter_by(id=user_id).first()
+    if request.method == 'POST':
+        password  = request.form['new_password']
+        password_check = request.form['confirm_password']
+        error = None
+        valid_password = is_valid_password(password)
+
+        if not password or not password_check:
+            error = 'Faltan campos por completar.'
+
+        if password_check != password_check:
+            error = 'Las contraseñas no coinciden.'
+
+        if valid_password is False:
+            error = 'Contraseña no valido.'
+
+        if error:
+            flash(error)
+
+        else:
+            user.password_hash = generate_password_hash(password)
+            db.session.commit()
+            return redirect(url_for('auth.login'))
+    
+    return render_template('auth/change_password.html')
+
 
 def login_required(view):
     @functools.wraps(view)
