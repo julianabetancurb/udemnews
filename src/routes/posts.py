@@ -41,14 +41,12 @@ def create():
         
     return render_template('post/create.html')
 
-def get_post(id, check_author=True):
+def get_post(id):
     post = Post.query.filter_by(id=id).first()
 
     if post is None:
         abort(404, f"Post id {id} doesn't exist.")
 
-    if check_author and post.user_id != g.user.id:
-        abort(403)
 
     return post
 
