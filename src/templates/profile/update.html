@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Editar "Perfil"{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <div class="mb-3">
+      <label for="username" class="form-label">Nombre</label>
+      <input type="text" class="form-control" id="username" name="username" value="{{ request.form['username'] or user['username'] }}" required>
+    </div>
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input class="form-control" id="email" name="email" value="{{request.form['email'] or user['email'] }}" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Guardar</button>
+    <a class="btn btn-primary" href="{{ url_for('profile.profile_index')}}">Regresar</a>
+  </form>
+{% endblock %}

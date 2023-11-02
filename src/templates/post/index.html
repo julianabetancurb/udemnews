@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}Posts{% endblock %}</h1>
+  <h1>{% block title %}Convocatorias{% endblock %}</h1>
   {% if g.user %}
     <a class="btn btn-primary" href="{{ url_for('post.create') }}">Nuevo</a>
   {% endif %}
@@ -21,6 +21,7 @@
               {% if g.user and g.user.id == post.user_id %}
                 <a class="btn btn-primary" href="{{ url_for('post.update', id=post.id) }}">Editar</a>
               {% endif %}
+              <a class="btn btn-secondary" href="{{ url_for('post.details', id=post.id) }}">Detalles</a>
             </div>
           </div>
         </div>

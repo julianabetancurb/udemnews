@@ -4,21 +4,21 @@ from flask import (
 from werkzeug.exceptions import abort
 from routes.auth import login_required
 from utils.db import db
-from models.post import Post
+from models.new import New
 
-post = Blueprint('post', __name__)
+new = Blueprint('new', __name__)
 
-@post.route('/')
+@new.route('/')
 def index():
-    posts = db.session.query(Post).all()
-    return render_template('post/index.html', posts=posts)
+    news = db.session.query(New).all()
+    return render_template('new/index.html', news=news)
 
-@post.route('/create', methods=['GET', 'POST'])
+@new.route('/create', methods=['GET', 'POST'])
 def create():
     if request.method == 'POST':
         title = request.form['title']
         description = request.form['description']
-        img = request.form['img']
+        date = request.form['date']
         user_id = g.user.id
         error = None
 
@@ -30,16 +30,16 @@ def create():
             flash(error)
 
         else:
-            new_post = Post(title, description, img, user_id)
-            db.session.add(new_post)
+            new = New(title, description, date, user_id)
+            db.session.add(new)
             db.session.commit()
         
             return redirect(url_for('post.index'))
         
     return render_template('post/create.html')
 
-def get_post(id, check_author=True):
-    post = Post.query.filter_by(id=id).first()
+def get_new(id, check_author=True):
+    post = New.query.filter_by(id=id).first()
 
     if post is None:
         abort(404, f"Post id {id} doesn't exist.")
@@ -49,15 +49,15 @@ def get_post(id, check_author=True):
 
     return post
 
-@post.route('/<int:id>/update', methods=['GET', 'POST'])
+@new.route('/<int:id>/update', methods=['GET', 'POST'])
 @login_required
 def update(id):
-    post = get_post(id)
+    new = get_new(id)
 
     if request.method == 'POST':
         title = request.form['title']
         description = request.form['description']
-        img = request.form['img']
+        date = request.form['date']
         error = None
 
         if not title or not description:
@@ -67,31 +67,30 @@ def update(id):
             flash(error)
         
         else:
-            post.title = title
-            post.description = description
-            post.img = img
+            new.title = title
+            new.description = description
+            new.date = date
             db.session.commit()
-            return redirect(url_for('post.index'))
+            return redirect(url_for('new.index'))
         
-    return render_template('post/update.html', post=post)
+    return render_template('new/update.html', new=new)
 
 
-@post.route('/<int:id>/details', methods=['GET'])
+@new.route('/<int:id>/details', methods=['GET'])
 def details(id):
-    post = get_post(id)
-    if post is None:
+    new = get_new(id)
+    if new is None:
         abort(404)
-    return render_template('post/details.html', post=post)
+    return render_template('new/details.html', new)
 
 
 
-@post.route('/<int:id>/delete', methods=['POST'])
+@new.route('/<int:id>/delete', methods=['POST'])
 @login_required
 def delete(id):
-    post = get_post(id)
+    new = get_new(id)
 
-    if post:
-        db.session.delete(post)
+    if new:
+        db.session.delete(new)
         db.session.commit()
-        return redirect(url_for('post.index'))
-
+        return redirect(url_for('new.index'))

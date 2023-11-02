@@ -19,6 +19,7 @@
       <input type="text" class="form-control" id="img" name="img" value="{{ request.form['img'] or post['img'] }}" required>
     </div>
     <button type="submit" class="btn btn-primary">Guardar</button>
+    <a class="btn btn-primary" href="/">Regresar</a>
   </form>
   <hr>
   <form action="{{ url_for('post.delete', id=post['id']) }}" method="post">

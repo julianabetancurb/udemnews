@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Perfil{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+        <div class="col-md-6">
+          <div class="card mb-4">
+            <div class="card-body">
+              <h5 class="card-title">{{ user.username }}</h5>
+              <p class="card-text">{{ user.email }}</p>
+            </div>
+          </div>
+        </div>
+    </div>
+    <a class="btn btn-primary" href="{{ url_for('profile.update') }}">Editar</a>
+    <a class="btn btn-primary" href="/">Regresar</a>
+  </div>
+{% endblock %}
