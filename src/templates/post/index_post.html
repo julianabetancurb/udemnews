@@ -1,32 +1,68 @@
-{% extends 'base.html' %}
-
-{% block header %}
-  <h1>{% block title %}Convocatorias{% endblock %}</h1>
-  {% if g.user %}
-    <a class="btn btn-primary" href="{{ url_for('post.create') }}">Nuevo</a>
-  {% endif %}
-{% endblock %}
+{% extends 'navbar_base.html' %}
 
 {% block content %}
-  <div class="container">
-    <div class="row">
-      {% for post in posts %}
-        <div class="col-md-6">
-          <div class="card mb-4">
-            <img src="{{ post.img }}" class="card-img-top" alt="{{ post.title }}">
-            <div class="card-body">
-              <h5 class="card-title">{{ post.title }}</h5>
-              <p class="card-text">{{ post.description }}</p>
-              <p class="card-text"><small class="text-muted">Hecho por: {{ post.user.username }}</small></p>
-              <p class="card-text"><small class="text-muted">Programa: {{ post.faculty }}</small></p>
-              {% if g.user and g.user.id == post.user_id %}
-                <a class="btn btn-primary" href="{{ url_for('post.update', id=post.id) }}">Editar</a>
-              {% endif %}
-              <a class="btn btn-secondary" href="{{ url_for('post.details', id=post.id) }}">Detalles</a>
+
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Convocatorias</title>
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css'><link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+  
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap");
+
+body {
+  font-family: "Poppins", sans-serif !important;
+}
+
+</style>
+<!-- partial:index.partial.html -->
+
+<div class="container my-5">
+  <div class="text-center mb-5">
+    <span class="text-secondary text-uppercase">Convocatoria</span>
+    <h1 class="text-capitalize font-weight-bold mt-2">Convocatorias <span style="color:#5d81e5">recientes</span></h1>
+  </div>
+  <div class="row">
+    {% for post in posts %}
+    <div class="col-md-4 p-4">
+      <div class="border">
+        <div class="position-relative w-100" style="height: 250px;background-image:url('{{ post.img }}'); background-size: cover; background-position: center;">
+          <div class="position-absolute bg-dark" style="opacity: .3; top: 0; left:0; right: 0; bottom: 0;"></div>
+          <a href="{{ url_for('post.details', id=post.id) }}" class="position-absolute px-3 py-2 text-white" style="bottom:10px; left: 10px; background-color: #5d81e5;"><small>Ver más</small></a>
+        </div>
+        <div class="px-3 pt-4 pb-3">
+          <a href="{{ url_for('post.details', id=post.id) }}" class="d-inline-block"><h4 class="text-dark" style="font-weight: 600; font-size: 1.1rem;">{{ post.title }}</h4></a>
+          <p class="tex-secondary">{{ post.description }}</p>
+          <div class="d-flex mt-4">
+            <div class="d-flex align-items-center mr-4">
+              <svg height="16px" class="mr-2" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                viewBox="0 0 300.988 300.988" style="enable-background:new 0 0 300.988 300.988;" xml:space="preserve">
+                <!-- Aquí va el contenido del SVG -->
+              </svg>
+              <small class="mt-1" style="color: #5d81e5;">{{ post.user.username }}</small>
+            </div>
+            <div class="d-flex align-items-center">
+              <svg height="16px" class="mr-2" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                viewBox="0 0 60.015 60.015" style="enable-background:new 0 0 60.015 60.015;" xml:space="preserve">
+                <!-- Aquí va el contenido del SVG -->
+              </svg>
+              <small class="mt-1" style="color: #5d81e5;">{{ post.faculty }}</small>
             </div>
           </div>
         </div>
-      {% endfor %}
+      </div>
     </div>
+    {% endfor %}
   </div>
+</div>
+
+{% if g.user %}
+  <a class="btn btn-primary" href="{{ url_for('post.create') }}">Nuevo</a>
+{% endif %}
+
 {% endblock %}

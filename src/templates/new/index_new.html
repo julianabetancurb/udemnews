@@ -1,30 +1,63 @@
-{% extends 'base.html' %}
-
-{% block header %}
-  <h1>{% block title %}Noticias{% endblock %}</h1>
-  {% if g.user %}
-    <a class="btn btn-primary" href="{{ url_for('new.create') }}">Nuevo</a>
-  {% endif %}
-{% endblock %}
+{% extends 'navbar_base.html' %}
 
 {% block content %}
-  <div class="container">
-    <div class="row">
-      {% for new in news %}
-        <div class="col-md-6">
-          <div class="card mb-4">
-            <div class="card-body">
-              <h5 class="card-title">{{ new.title }}</h5>
-              <p class="card-text">{{ new.description }}</p>
-              <p class="card-text"><small class="text-muted">por {{ new.user.username }}</small></p>
-              {% if g.user and g.user.id == new.user_id %}
-                <a class="btn btn-primary" href="{{ url_for('new.update', id=new.id) }}">Editar</a>
-              {% endif %}
-              <a class="btn btn-secondary" href="{{ url_for('new.details', id=new.id) }}">Detalles</a>
+
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Convocatorias</title>
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css'><link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+  
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap");
+
+body {
+  font-family: "Poppins", sans-serif !important;
+}
+
+</style>
+<!-- partial:index.partial.html -->
+
+<div class="container my-5">
+  <div class="text-center mb-5">
+    <span class="text-secondary text-uppercase">Noticias</span>
+    <h1 class="text-capitalize font-weight-bold mt-2">Noticias  <span style="color:#5d81e5">recientes</span></h1>
+  </div>
+  <div class="row">
+    {% for new in news %}
+    <div class="col-md-4 p-4">
+      <div class="border">
+        <div class="position-relative w-100" style="height: 250px;background-image: url(https://us.123rf.com/450wm/koblizeek/koblizeek2205/koblizeek220500309/186660515-sin-s%C3%ADmbolo-de-vector-de-imagen-falta-el-icono-disponible-no-hay-galer%C3%ADa-para-este-marcador-de.jpg?ver=6); background-size: cover; background-position: center;">
+          <div class="position-absolute bg-dark" style="opacity: .3; top: 0; left:0; right: 0; bottom: 0;"></div>
+          <a href="{{ url_for('new.details', id=new.id) }}"class="position-absolute px-3 py-2 text-white" style="bottom:10px; left: 10px; background-color: #5d81e5;"><small>Ver más</small></a>
+        </div>
+        <div class="px-3 pt-4 pb-3">
+          <a href="{{ url_for('new.details', id=new.id) }}"class="d-inline-block"><h4 class="text-dark" style="font-weight: 600; font-size: 1.1rem;">{{ new.title }}</h4></a>
+          <p class="tex-secondary">{{ new.description }}</p>
+          <div class="d-flex mt-4">
+            <div class="d-flex align-items-center mr-4">
+              <svg height="16px" class="mr-2" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                viewBox="0 0 300.988 300.988" style="enable-background:new 0 0 300.988 300.988;" xml:space="preserve">
+                <!-- Aquí va el contenido del SVG -->
+              </svg>
+              <small class="mt-1" style="color: #5d81e5;">{{ new.user.username }}</small>
             </div>
+            
           </div>
         </div>
-      {% endfor %}
+      </div>
     </div>
+    {% endfor %}
   </div>
+</div>
+
+{% if g.user %}
+  <a class="btn btn-primary" href="{{ url_for('new.create') }}">Nuevo</a>
+{% endif %}
+
 {% endblock %}
+  

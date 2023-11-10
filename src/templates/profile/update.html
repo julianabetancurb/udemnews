@@ -1,10 +1,16 @@
-{% extends 'base.html' %}
+{% extends 'navbar_base.html' %}
 
 {% block header %}
   <h1>{% block title %}Editar "Perfil"{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap");
+  body {
+font-family: "Poppins", sans-serif !important;
+}
+</style>
   <form method="post">
     <div class="mb-3">
       <label for="username" class="form-label">Nombre</label>
