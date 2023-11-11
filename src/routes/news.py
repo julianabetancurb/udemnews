@@ -42,7 +42,7 @@ def get_new(id, check_author=True):
     new = New.query.filter_by(id=id).first()
 
     if new is None:
-        abort(404, f"Post id {id} doesn't exist.")
+        abort(404, f"New id {id} doesn't exist.")
 
     if check_author and new.user_id != g.user.id:
         abort(403)
