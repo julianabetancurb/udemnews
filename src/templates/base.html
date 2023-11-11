@@ -1,63 +1,202 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>{% block title %}{% endblock %} - UdeMNews</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css'>
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+<link rel="stylesheet" href="./style.css">
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap");
+
+body {
+  font-family: "Poppins", sans-serif !important;
+}
+.jumbotron {
+    position: relative;
+    background: url(https://udemedellin.edu.co/wp-content/uploads/2021/02/Campus-Bienestar-1024x680.jpg) no-repeat bottom center / cover;
     
-    <!-- Agrega los enlaces al CDN de Bootstrap -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    &:before {
+      position: absolute;
+      content: '';
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, .5);
+    }
+    
+    .container {
+      padding: 75px 0;
+    }
+    .navbar-nav.ml-auto {
+    margin-left: auto;
+} 
+    
+  }
+  
+  /* Features */
+  .sec-features {
+    .row {    
+      &:nth-of-type(n+2) {
+        margin-top: 160px;
+      }
+      
+      &:last-of-type {
+        margin-bottom: 160px;
+      }
+    }
+    
+    .feature-icon {
+      max-width: 150px;
+    }
+  }</style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="container">
-            <a class="navbar-brand" href="#">Udem News</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('post.index') }}">Convocatorias</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('new.index_new')}}">Noticias</a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav">
-                    {% if g.user %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('profile.profile_index')}}">{{ g.user['username'] }}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('auth.logout') }}">Log Out</a>
-                        </li>
-                    {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('auth.register') }}">Register</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('auth.login') }}">Log In</a>
-                        </li>
-                    {% endif %}
-                </ul>
-            </div>
+<!-- partial:index.partial.html -->
+<div class="wrapper">
+  <section class="hero">
+    <header>
+      <div class="container">
+        <nav class="navbar navbar-light navbar-toggleable-sm">
+          <a href="#" class="navbar-brand mb-1">UdeNews</a>
+
+          <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#headerNav" aria-controls="headerNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+              <li class="nav-item">
+                  <a class="nav-link active" href="{{ url_for('index') }}">Inicio</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{{ url_for('post.index_post') }}">Convocatorias</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{{ url_for('new.index_new')}}">Noticias</a>
+              </li>
+          </ul>
+          <ul class="navbar-nav ml-auto">
+              {% if g.user %}
+                  <li class="nav-item">
+                      <a class="nav-link" href="{{ url_for('profile.profile_index')}}">{{ g.user['username'] }}</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="{{ url_for('auth.logout') }}">Cerrar sesión</a>
+                  </li>
+              {% else %}
+                  <li class="nav-item">
+                      <a class="nav-link" href="{{ url_for('auth.register') }}">Registrarse</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="{{ url_for('auth.login') }}">Iniciar sesión</a>
+                  </li>
+              {% endif %}
+          </ul>
         </div>
-    </nav>
-    <div class="container mt-4">
-        <section class="content">
-            <header>
-                {% block header %}{% endblock %}
-            </header>
-            {% for message in get_flashed_messages() %}
-                <div class="alert alert-info">{{ message }}</div>
-            {% endfor %}
-            {% block content %}{% endblock %}
-        </section>
+        </nav>
+        
+      </div>
+    </header>
+
+    <div class="jumbotron jumbotron-fluid mb-0">
+      <div class="container">
+        <div class="row justify-content-center text-center">
+          <div class="col-md-10 col-lg-6">
+            <h1 class="h1"  style="color: white;">UdeNews</h1>
+
+            <p class="lead"  style="color: white;">Un espacio donde puedes publicar y participar de convocatorias, noticias, publicaciones relacionadas con nuestra universidad y tus temas de interés.</p>
+            <p class="lead">
+              <a class="btn btn-secondary btn-lg" href="#sec-pricing" role="button">Descubre más</a>
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
+  </section>
+
+  <section id="sec-about" class="sec-about pt-5 pb-5">
+    <div class="container">
+      <div class="row justify-content-center text-center">
+        <div class="col-md-10 col-lg-8">
+          <h1 class="h4">Nuestra misión</h1>
+          <p class="mt-4 mb-4">Con la creación de esta página web deseamos aumentar la difusión de información de interés de la UdeM con respecto a convocatorias y noticias. Pensando siempre en conservar una dinámica atractiva para los estudiantes y en que puedan encontrar información valiosa.</p>
+        </div>
+      </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section id="sec-pricing" class="sec-pricing">
+    <div class="container">  
+      <div class="row justify-content-center">
+        <div class="col-md-4">
+          <div class="card text-center">
+            <div class="card-block">
+              <h4 class="card-title h5">Convocatorias</h4>
+
+              <p class="card-text">Inscripciones abiertas para estudiantes interesados en semilleros de distintas carreras y temas de interés.</p>
+
+              <a href="#" class="btn btn-secondary">Ver más</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card text-center">
+            <div class="card-block">
+              <h4 class="card-title h5">Noticias</h4>
+              <p class="card-text">Lee noticias relevantes sobre lo que pasa día a día en nuestro campus, reporteros desde todas las facultades.</p>
+
+              <a href="#" class="btn btn-secondary">Ver más</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card text-center">
+            <div class="card-block justify-content-center">
+              <h4 class="card-title h5">Crear</h4>
+
+              <p class="card-text">Comienza a crear tu propia noticia o convocatoria del tema de tu interés. Recuerda no publicar cosas obscenas.</p>
+
+              <a href="#" class="btn btn-secondary">Ver más</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <ul class="list-inline mb-0 text-center">
+        <li class="list-inline-item">
+          <a href=""><span class="fa fa-twitter"></span></a>
+        </li>
+        
+        <li class="list-inline-item">
+          <a href=""><span class="fa fa-google-plus"></span></a>
+        </li>
+        
+        <li class="list-inline-item">
+          <a href=""><span class="fa fa-instagram"></span></a>
+        </li>
+        
+        <li class="list-inline-item">
+          <a href=""><span class="fa fa-envelope-o"></span></a>
+        </li>
+      </ul>
+    </div>
+    
+  </footer>
+</div>
+<!-- partial -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/js/bootstrap.min.js'></script><script  src="./script.js"></script>
+
 </body>
 </html>
+

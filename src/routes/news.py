@@ -34,7 +34,7 @@ def create():
             db.session.add(new)
             db.session.commit()
         
-            return redirect(url_for('new.index'))
+            return redirect(url_for('new.index_new'))
         
     return render_template('new/create.html')
 
@@ -82,7 +82,7 @@ def details(id):
     new = get_new(id)
     if new is None:
         abort(404)
-    return render_template('new/details.html', new)
+    return render_template('new/details.html', new=new)
 
 
 
@@ -94,4 +94,4 @@ def delete(id):
     if new:
         db.session.delete(new)
         db.session.commit()
-        return redirect(url_for('new.index'))
+        return redirect(url_for('new.index_new'))

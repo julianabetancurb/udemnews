@@ -10,6 +10,10 @@ post = Blueprint('post', __name__)
 
 @post.route('/')
 def index():
+    return render_template('base.html')
+
+@post.route('/posts')
+def index_post():
     posts = db.session.query(Post).all()
     return render_template('post/index_post.html', posts=posts)
 

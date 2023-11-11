@@ -1,7 +1,7 @@
 {% extends 'navbar_base.html' %}
 
 {% block header %}
-  <h1>{% block title %}Nueva noticia{% endblock %}</h1>
+  <h1>{% block title %}Editar {{ new['title'] }}{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
@@ -15,18 +15,21 @@
   <form method="post">
     <div class="mb-3">
       <label for="title" class="form-label">Título</label>
-      <input type="text" class="form-control" id="title" name="title" value="{{ request.form['title'] }}" required>
+      <input type="text" class="form-control" id="title" name="title" value="{{ request.form['title'] or new['title'] }}" required>
     </div>
     <div class="mb-3">
       <label for="description" class="form-label">Descripción</label>
-      <textarea class="form-control" id="description" name="description">{{ request.form['description'] }}</textarea>
+      <textarea class="form-control" id="description" name="description">{{ request.form['description'] or new['description'] }}</textarea>
     </div>
     <div class="mb-3">
-      <label for="date" class="form-label">Agrega una fecha de la noticia</label>
-      <input type="date" class="form-control" id="date" name="date" value="{{ request.form['date'] }}" required>
+      <label for="img" class="form-label">Imagen</label>
+      <input type="text" class="form-control" id="img" name="img" value="{{ request.form['img'] or new['img'] }}" required>
     </div>
-
     <button type="submit" class="btn btn-primary">Guardar</button>
     <a class="btn btn-primary" href="/">Regresar</a>
+  </form>
+  <hr>
+  <form action="{{ url_for('new.delete', id=new['id']) }}" method="post">
+    <button type="submit" class="btn btn-danger" onclick="return confirm('¿Está seguro?');">Eliminar</button>
   </form>
 {% endblock %}

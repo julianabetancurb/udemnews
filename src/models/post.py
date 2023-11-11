@@ -13,7 +13,7 @@ class Post(db.Model):
 
 
     user = db.relationship('User', backref='posts')
-    #registrations = db.relationship("SignedUp")
+    
 
     def __init__(self, title, description, img, date, deadline, faculty, user_id, reports=0):
         self.title = title

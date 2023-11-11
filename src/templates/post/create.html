@@ -1,12 +1,19 @@
-{% extends 'base.html' %}
+{% extends 'navbar_base.html' %}
 
-{% set faculties = ['Ingenieria de sistemas', 'Ingenieria ambiental', 'Ingenieria financiera'] %}
+{% set faculties = ['Ingenieria de sistemas', 'Ingenieria ambiental', 'Ingenieria financiera', 'Diseño', 'Derecho'] %}
 
 {% block header %}
   <h1>{% block title %}Nueva publicación{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css'><link rel="stylesheet" href="./style.css">
+<style>
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap");
+    body {
+  font-family: "Poppins", sans-serif !important;
+}
+</style>
   <form method="post">
     <div class="mb-3">
       <label for="title" class="form-label">Título</label>
