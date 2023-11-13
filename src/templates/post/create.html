@@ -14,7 +14,7 @@
   font-family: "Poppins", sans-serif !important;
 }
 </style>
-  <form method="post">
+  <form  method="post">
     <div class="mb-3">
       <label for="title" class="form-label">Título</label>
       <input type="text" class="form-control" id="title" name="title" value="{{ request.form['title'] }}" required>
@@ -27,10 +27,10 @@
       <label for="img" class="form-label">Agrega una imagen</label>
       <input type="text" class="form-control" id="img" name="img" value="{{ request.form['img'] }}" required>
     </div>
-    <div class="mb-3">
+    <!-- <div class="mb-3">
       <label for="date" class="form-label">Agrega una fecha de inicio de la convocatoria</label>
       <input type="date" class="form-control" id="date" name="date" value="{{ request.form['date'] }}" required>
-    </div>
+    </div>  -->
     <div class="mb-3">
       <label for="deadline" class="form-label">Agrega una fecha de culminación de la convocatoria</label>
       <input type="date" class="form-control" id="deadline" name="deadline" value="{{ request.form['deadline'] }}" required>

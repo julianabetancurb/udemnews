@@ -48,10 +48,23 @@ viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="pres
 <p class="my-2" style="line-height: 2;">{{ post.description }}</p>
 <br>
 <br>
+{% if g.user and g.user.id != post.user_id and not record%}
+<a class="btn btn-primary" href="{{ url_for('post.register_user', id=post.id) }}">registrarse</a>
+{% endif %}
+{% if record %}
+<form action="{{ url_for('post.delete_register', id=post.id) }}" method="post">
+  <button type="submit" class="btn btn-danger" onclick="return confirm('¿Está seguro de querer descartar esta convocatoria?');">Descartar</button>
+</form>
+{% endif %}
 {% if g.user and g.user.id == post.user_id %}
 <div class="my-3">
   <small>
       <a href="{{ url_for('post.update', id=post.id) }}" class="text-primary">Editar</a>
+  </small>
+</div>
+<div class="my-3">
+  <small>
+      <a href="{{ url_for('post.get_registers', id=post.id) }}" class="text-primary">Inscritos</a>
   </small>
 </div>
 {% endif %}

@@ -101,7 +101,7 @@
       color: #919aa3;
     }
   </style>
-  
+  <title>Perfil</title>
   <div class="wrapper">
     <div class="left">
       <img src="https://i.pinimg.com/280x280_RS/42/03/a5/4203a57a78f6f1b1cc8ce5750f614656.jpg" alt="user" width="100">
@@ -124,6 +124,9 @@
         <div class="projects_data">
           <div class="data">
             <h4>Recientes</h4>
+            {% for post in posts %}
+            <a href="{{ url_for('post.details', id=post.id) }}">{{ post.title }}</a>
+            {% endfor %}
           </div>
           <div class="data">
             <h4>Populares</h4>

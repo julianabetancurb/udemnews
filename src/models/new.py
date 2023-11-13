@@ -5,13 +5,15 @@ class New(db.Model):
     title = db.Column(db.String(50), nullable=False)
     description = db.Column(db.String(500))
     date = db.Column(db.Date)
+    img = db.Column(db.String(300))
     reports = db.Column(db.Integer, default=0)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 
     user = db.relationship('User')
 
-    def __init__(self, title, description, date, user_id):
+    def __init__(self, title, description, date, img ,user_id):
+        self.img = img
         self.title = title
         self.description = description
         self.date = date
