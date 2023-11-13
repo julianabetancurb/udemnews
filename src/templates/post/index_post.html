@@ -23,9 +23,17 @@ body {
 <!-- partial:index.partial.html -->
 
 <div class="container my-5">
+  <div class="d-flex align-items-center justify-content-center mb-4">
+    <input type="text" class="form-control mr-2" id="searchInput" placeholder="Buscar convocatorias por nombre o facultad">
+    <button class="btn btn-primary"  style="bottom:10px; left: 10px; background-color: #5d81e5;"type="button">Buscar</button>
+  </div>
+ 
   <div class="text-center mb-5">
     <span class="text-secondary text-uppercase">Convocatoria</span>
     <h1 class="text-capitalize font-weight-bold mt-2">Convocatorias <span style="color:#5d81e5">recientes</span></h1>
+    {% if g.user %}
+    <a class="btn btn-primary"  style="bottom:10px; left: 10px; background-color: #5d81e5;" href="{{ url_for('post.create') }}">Crear</a>
+  {% endif %}
   </div>
   <div class="row">
     {% for post in posts %}
@@ -44,14 +52,14 @@ body {
                 viewBox="0 0 300.988 300.988" style="enable-background:new 0 0 300.988 300.988;" xml:space="preserve">
                 <!-- Aquí va el contenido del SVG -->
               </svg>
-              <small class="mt-1" style="color: #5d81e5;">{{ post.user.username }}</small>
+              <small class="mt-1" style="color: #5d81e5;">{{ post.faculty  }}</small>
             </div>
             <div class="d-flex align-items-center">
               <svg height="16px" class="mr-2" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                 viewBox="0 0 60.015 60.015" style="enable-background:new 0 0 60.015 60.015;" xml:space="preserve">
                 <!-- Aquí va el contenido del SVG -->
               </svg>
-              <small class="mt-1" style="color: #5d81e5;">{{ post.faculty }}</small>
+              <small class="mt-1" style="color: #5d81e5;">{{ post.user.username }}</small>
             </div>
           </div>
         </div>
@@ -61,8 +69,30 @@ body {
   </div>
 </div>
 
-{% if g.user %}
-  <a class="btn btn-primary" href="{{ url_for('post.create') }}">Nuevo</a>
-{% endif %}
 
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const searchInput = document.getElementById('searchInput');
+    const postContainers = document.querySelectorAll('.col-md-4');
+  
+    searchInput.addEventListener('input', function (event) {
+      const searchTerm = event.target.value.toLowerCase();
+  
+      postContainers.forEach(function (postContainer) {
+        const titleText = postContainer.querySelector('.text-dark').textContent.toLowerCase();
+        const facultyText = postContainer.querySelector('.mt-1').textContent.toLowerCase();
+  
+        // Check if either title or faculty contains the search term
+        if (titleText.includes(searchTerm) || facultyText.includes(searchTerm)) {
+          postContainer.style.display = 'block';
+        } else {
+          postContainer.style.display = 'none';
+        }
+      });
+    });
+  });
+  </script>
+  
+  
 {% endblock %}
