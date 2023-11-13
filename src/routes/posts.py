@@ -8,7 +8,7 @@ from utils.db import db
 from models.post import Post
 from models.user import User
 from models.signed_up import SignedUp
-import os
+
 
 post = Blueprint('post', __name__)
 

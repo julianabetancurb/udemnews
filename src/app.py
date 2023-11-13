@@ -4,7 +4,7 @@ from routes.auth import auth
 from routes.profile import profile
 from routes.news import new
 from utils.db import db
-import os
+
 
 app = Flask(__name__)
 
