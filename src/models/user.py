@@ -1,4 +1,4 @@
-from utils.db import db
+from utils.db import db, signedup
 
 
 class User(db.Model):
@@ -9,7 +9,7 @@ class User(db.Model):
     recovery_question = db.Column(db.String(70), nullable=False)
     recovery_answer = db.Column(db.String(40), nullable=False)
 
-    #registrations = db.relationship("SignedUp")
+    posts_registered = db.relationship('Post', secondary='signedup', back_populates='users')
 
     def __init__(self, username, email, password, recovery_question, recovery_answer):
         self.username = username

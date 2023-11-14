@@ -18,6 +18,19 @@
 body {
   font-family: "Poppins", sans-serif !important;
 }
+.button {
+        font-family: "Poppins", sans-serif;
+        outline: 0;
+        background: #A82E26;
+        width: 50%;
+        border: 0;
+        padding: 15px;
+        color: #FFFFFF;
+        font-size: 14px;
+        -webkit-transition: all 0.3s ease;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        /* Puedes ajustar este valor según tus preferencias */}
 
 </style>
 <!-- partial:index.partial.html -->
@@ -25,14 +38,14 @@ body {
 <div class="container my-5">
   <div class="d-flex align-items-center justify-content-center mb-4">
     <input type="text" class="form-control mr-2" id="searchInput" placeholder="Buscar convocatorias por nombre o facultad">
-    <button class="btn btn-primary"  style="bottom:10px; left: 10px; background-color: #5d81e5;"type="button">Buscar</button>
+    <button class="btn btn-secondary"  style="bottom:10px; left: 10px; background-color: #A82E26;"type="button">Buscar</button>
   </div>
  
   <div class="text-center mb-5">
     <span class="text-secondary text-uppercase">Convocatoria</span>
-    <h1 class="text-capitalize font-weight-bold mt-2">Convocatorias <span style="color:#5d81e5">recientes</span></h1>
+    <h1 class="text-capitalize font-weight-bold mt-2">Convocatorias <span style="color:#A82E26">recientes</span></h1>
     {% if g.user %}
-    <a class="btn btn-primary"  style="bottom:10px; left: 10px; background-color: #5d81e5;" href="{{ url_for('post.create') }}">Crear</a>
+    <a class="btn btn-secondary"  style="bottom:10px; left: 10px; background-color: #A82E26;" href="{{ url_for('post.create') }}">Crear</a>
   {% endif %}
   </div>
   <div class="row">
@@ -41,25 +54,26 @@ body {
       <div class="border">
         <div class="position-relative w-100" style="height: 250px;background-image:url('{{ post.img }}'); background-size: cover; background-position: center;">
           <div class="position-absolute bg-dark" style="opacity: .3; top: 0; left:0; right: 0; bottom: 0;"></div>
-          <a href="{{ url_for('post.details', id=post.id) }}" class="position-absolute px-3 py-2 text-white" style="bottom:10px; left: 10px; background-color: #5d81e5;"><small>Ver más</small></a>
+          <a href="{{ url_for('post.details', id=post.id) }}" class="position-absolute px-3 py-2 text-white" style="bottom:10px; left: 10px; background-color: #A82E26;  border-radius: 4px;"><small>Ver más</small></a>
         </div>
         <div class="px-3 pt-4 pb-3">
           <a href="{{ url_for('post.details', id=post.id) }}" class="d-inline-block"><h4 class="text-dark" style="font-weight: 600; font-size: 1.1rem;">{{ post.title }}</h4></a>
-          <p class="tex-secondary">{{ post.description }}</p>
+          <p class="tex-secondary">{{ post.description[:60] + '...' }}</p>
           <div class="d-flex mt-4">
             <div class="d-flex align-items-center mr-4">
               <svg height="16px" class="mr-2" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                 viewBox="0 0 300.988 300.988" style="enable-background:new 0 0 300.988 300.988;" xml:space="preserve">
                 <!-- Aquí va el contenido del SVG -->
               </svg>
-              <small class="mt-1" style="color: #5d81e5;">{{ post.faculty  }}</small>
+              
+              <small class="mt-1" style="color: #A82E26;">{{ post.faculty  }}</small>
             </div>
             <div class="d-flex align-items-center">
               <svg height="16px" class="mr-2" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                 viewBox="0 0 60.015 60.015" style="enable-background:new 0 0 60.015 60.015;" xml:space="preserve">
                 <!-- Aquí va el contenido del SVG -->
               </svg>
-              <small class="mt-1" style="color: #5d81e5;">{{ post.user.username }}</small>
+              <small class="mt-1" style="color: #A82E26;">{{ post.user.username }}</small>
             </div>
           </div>
         </div>

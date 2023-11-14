@@ -1,5 +1,6 @@
 from utils.db import db
 from models.user import User
+from models.post import Post
 from routes.auth import is_valid_email
 
 from flask import (
@@ -11,7 +12,8 @@ profile = Blueprint('profile', __name__, url_prefix='/profile')
 @profile.route('/profile', methods=['GET'])
 def profile_index():
     user = User.query.filter_by(id=g.user.id).first()
-    return render_template('profile/profile.html', user=user)
+    posts = Post.query.filter_by(user_id=g.user.id).all()
+    return render_template('profile/profile.html', user=user, posts=posts)
 
 @profile.route('/update_profile', methods=['GET','POST'])
 def update():

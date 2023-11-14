@@ -19,6 +19,7 @@ def create():
         title = request.form['title']
         description = request.form['description']
         date = request.form['date']
+        img = "imagen"
         user_id = g.user.id
         error = None
 
@@ -30,7 +31,7 @@ def create():
             flash(error)
 
         else:
-            new = New(title, description, date, user_id)
+            new = New(title, description, date, img, user_id)
             db.session.add(new)
             db.session.commit()
         
@@ -38,14 +39,11 @@ def create():
         
     return render_template('new/create.html')
 
-def get_new(id, check_author=True):
+def get_new(id):
     new = New.query.filter_by(id=id).first()
 
     if new is None:
-        abort(404, f"Post id {id} doesn't exist.")
-
-    if check_author and new.user_id != g.user.id:
-        abort(403)
+        abort(404, f"New id {id} doesn't exist.")
 
     return new
 
@@ -58,6 +56,7 @@ def update(id):
         title = request.form['title']
         description = request.form['description']
         date = request.form['date']
+        img = 'img'
         error = None
 
         if not title or not description:
@@ -70,6 +69,7 @@ def update(id):
             new.title = title
             new.description = description
             new.date = date
+            new.img = img
             db.session.commit()
             return redirect(url_for('new.index'))
         

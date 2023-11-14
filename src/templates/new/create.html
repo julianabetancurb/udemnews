@@ -1,7 +1,7 @@
 {% extends 'navbar_base.html' %}
 
 {% block header %}
-  <h1>{% block title %}Nueva noticia{% endblock %}</h1>
+  <h1 class="text-capitalize font-weight-bold mt-2">{% block title %}Nueva noticia{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
@@ -11,6 +11,18 @@
     body {
   font-family: "Poppins", sans-serif !important;
 }
+.button {
+        font-family: "Poppins", sans-serif;
+        outline: 0;
+        background: #A82E26;
+        border: 0;
+        padding: 15px;
+        color: #FFFFFF;
+        font-size: 14px;
+        -webkit-transition: all 0.3s ease;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        border-radius: 4px; /* Puedes ajustar este valor según tus preferencias */}
 </style>
   <form method="post">
     <div class="mb-3">
@@ -26,7 +38,7 @@
       <input type="date" class="form-control" id="date" name="date" value="{{ request.form['date'] }}" required>
     </div>
 
-    <button type="submit" class="btn btn-primary">Guardar</button>
-    <a class="btn btn-primary" href="/">Regresar</a>
+    <button type="submit"  class="button">Guardar</button>
+    <a class="button" href="/">Regresar</a>
   </form>
 {% endblock %}

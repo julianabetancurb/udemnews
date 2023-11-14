@@ -1,4 +1,4 @@
-from utils.db import db
+from utils.db import db, signedup
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True,  unique=True, autoincrement=True)
@@ -12,6 +12,7 @@ class Post(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 
+    users = db.relationship('User', secondary='signedup', back_populates='posts_registered')
     user = db.relationship('User', backref='posts')
     
 

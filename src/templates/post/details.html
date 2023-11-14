@@ -11,6 +11,21 @@
     @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap");
     body {
   font-family: "Poppins", sans-serif !important;
+   .button {
+        font-family: "Poppins", sans-serif;
+        outline: 0;
+        background: #A82E26;
+
+        border: 0;
+        padding: 15px;
+        color: #FFFFFF;
+        font-size: 14px;
+        -webkit-transition: all 0.3s ease;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        border-radius: 4px; /* Puedes ajustar este valor según tus preferencias */
+    }
+
 }
 </style>
 </head>
@@ -45,13 +60,26 @@ viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="pres
 
   <div class="col-lg-8 p-2 p-sm-4 mx-auto">
     <div class="text-secondary">
-<p class="my-2" style="line-height: 2;">{{ post.description }}</p>
+<p class="my-2" style="line-height: 2; text-align: justify;">{{ post.description }}</p>
 <br>
 <br>
+{% if g.user and g.user.id != post.user_id and not record%}
+<a class="button" href="{{ url_for('post.register_user', id=post.id) }}">Inscribirse en la convocatoria</a>
+{% endif %}
+{% if record %}
+<form action="{{ url_for('post.delete_register', id=post.id) }}" method="post">
+  <button type="submit" class="button" onclick="return confirm('¿Está seguro de querer descartar esta convocatoria?');">Remover inscripción</button>
+</form>
+{% endif %}
 {% if g.user and g.user.id == post.user_id %}
 <div class="my-3">
   <small>
       <a href="{{ url_for('post.update', id=post.id) }}" class="text-primary">Editar</a>
+  </small>
+</div>
+<div class="my-3">
+  <small>
+      <a href="{{ url_for('post.get_registers', id=post.id) }}" class="text-primary">Inscritos</a>
   </small>
 </div>
 {% endif %}

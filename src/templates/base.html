@@ -59,7 +59,9 @@ body {
     <header>
       <div class="container">
         <nav class="navbar navbar-light navbar-toggleable-sm">
-          <a href="#" class="navbar-brand mb-1">UdeNews</a>
+          <a class="navbar-brand" href="{{ url_for('index') }}">
+            <img src="{{ url_for('static', filename='logoo.png') }}" alt="Logo UdeNews" width="140" height="70" class="d-inline-block align-top">
+        </a>
 
           <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#headerNav" aria-controls="headerNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -108,7 +110,7 @@ body {
 
             <p class="lead"  style="color: white;">Un espacio donde puedes publicar y participar de convocatorias, noticias, publicaciones relacionadas con nuestra universidad y tus temas de interés.</p>
             <p class="lead">
-              <a class="btn btn-secondary btn-lg" href="#sec-pricing" role="button">Descubre más</a>
+              <a class="btn btn-secondary btn-lg" href="#sec-pricing" onclick="scrollToSection('#sec-pricing')"role="button">Descubre más</a>
             </p>
           </div>
         </div>
@@ -139,7 +141,7 @@ body {
 
               <p class="card-text">Inscripciones abiertas para estudiantes interesados en semilleros de distintas carreras y temas de interés.</p>
 
-              <a href="#" class="btn btn-secondary">Ver más</a>
+              <a href="{{ url_for('post.index_post') }}" class="btn btn-secondary">Ver más</a>
             </div>
           </div>
         </div>
@@ -150,7 +152,7 @@ body {
               <h4 class="card-title h5">Noticias</h4>
               <p class="card-text">Lee noticias relevantes sobre lo que pasa día a día en nuestro campus, reporteros desde todas las facultades.</p>
 
-              <a href="#" class="btn btn-secondary">Ver más</a>
+              <a href="{{ url_for('new.index_new')}}" class="btn btn-secondary">Ver más</a>
             </div>
           </div>
         </div>
@@ -160,9 +162,10 @@ body {
             <div class="card-block justify-content-center">
               <h4 class="card-title h5">Crear</h4>
 
-              <p class="card-text">Comienza a crear tu propia noticia o convocatoria del tema de tu interés. Recuerda no publicar cosas obscenas.</p>
-
-              <a href="#" class="btn btn-secondary">Ver más</a>
+              <p class="card-text">Comienza a crear tu propia noticia o convocatoria del tema de tu interés. Recuerda iniciar sesión.</p>
+              {% if g.user %}
+              <a href="{{ url_for('post.create') }}" class="btn btn-secondary">Ver más</a>
+              {%endif%}
             </div>
           </div>
         </div>
@@ -170,33 +173,18 @@ body {
     </div>
   </section>
 
-  <footer class="footer">
-    <div class="container">
-      <ul class="list-inline mb-0 text-center">
-        <li class="list-inline-item">
-          <a href=""><span class="fa fa-twitter"></span></a>
-        </li>
-        
-        <li class="list-inline-item">
-          <a href=""><span class="fa fa-google-plus"></span></a>
-        </li>
-        
-        <li class="list-inline-item">
-          <a href=""><span class="fa fa-instagram"></span></a>
-        </li>
-        
-        <li class="list-inline-item">
-          <a href=""><span class="fa fa-envelope-o"></span></a>
-        </li>
-      </ul>
-    </div>
-    
-  </footer>
+  
 </div>
 <!-- partial -->
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/js/bootstrap.min.js'></script><script  src="./script.js"></script>
-
+<script>
+  function scrollToSection(sectionId) {
+    $('html, body').animate({
+      scrollTop: $(sectionId).offset().top
+    }, 1000);
+  }
+</script>
 </body>
 </html>
 

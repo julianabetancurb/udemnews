@@ -1,9 +1,9 @@
 {% extends 'navbar_base.html' %}
 
-{% set faculties = ['Ingenieria de sistemas', 'Ingenieria ambiental', 'Ingenieria financiera', 'Diseño', 'Derecho'] %}
+{% set faculties = ['Ingenieria de sistemas', 'Ingenieria ambiental', 'Ingenieria financiera','Ingenieria civil', 'Facultad diseño', 'Facultad derecho', 'Facultad comunicaciones', 'Recreativo-otros'] %}
 
 {% block header %}
-  <h1>{% block title %}Nueva publicación{% endblock %}</h1>
+  <h1 class="text-capitalize font-weight-bold mt-2">{% block title %}Nueva publicación{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
@@ -12,9 +12,22 @@
     @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap");
     body {
   font-family: "Poppins", sans-serif !important;
+  
 }
+.button {
+        font-family: "Poppins", sans-serif;
+        outline: 0;
+        background: #A82E26;
+        border: 0;
+        padding: 15px;
+        color: #FFFFFF;
+        font-size: 14px;
+        -webkit-transition: all 0.3s ease;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        border-radius: 4px; /* Puedes ajustar este valor según tus preferencias */}
 </style>
-  <form method="post">
+  <form  method="post">
     <div class="mb-3">
       <label for="title" class="form-label">Título</label>
       <input type="text" class="form-control" id="title" name="title" value="{{ request.form['title'] }}" required>
@@ -27,10 +40,10 @@
       <label for="img" class="form-label">Agrega una imagen</label>
       <input type="text" class="form-control" id="img" name="img" value="{{ request.form['img'] }}" required>
     </div>
-    <div class="mb-3">
+    <!-- <div class="mb-3">
       <label for="date" class="form-label">Agrega una fecha de inicio de la convocatoria</label>
       <input type="date" class="form-control" id="date" name="date" value="{{ request.form['date'] }}" required>
-    </div>
+    </div>  -->
     <div class="mb-3">
       <label for="deadline" class="form-label">Agrega una fecha de culminación de la convocatoria</label>
       <input type="date" class="form-control" id="deadline" name="deadline" value="{{ request.form['deadline'] }}" required>
@@ -46,7 +59,7 @@
         </div>
       {% endfor %}
     </div>
-    <button type="submit" class="btn btn-primary">Guardar</button>
-    <a class="btn btn-primary" href="/">Regresar</a>
+    <button type="submit" class="button">Guardar</button>
+    <a class="button" href="/">Regresar</a>
   </form>
 {% endblock %}
