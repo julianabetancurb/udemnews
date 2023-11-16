@@ -9,7 +9,7 @@ from utils.db import db
 app = Flask(__name__)
 
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root@localhost/udmnews'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:f12eDGGd2G-b6Db4b2AefHGgFcD6b6Ag@roundhouse.proxy.rlwy.net:12015/railway'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 app.config['SECRET_KEY'] = 'ClaveUltraSecreta'
 
